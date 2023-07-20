@@ -61,17 +61,26 @@ const Graph = () => {
   console.log("Data by days:", dataByDays);
   console.log("Data by weeks:", dataByWeeks);
 
+  // Reordered weekDaysOrder with Thursday, Friday, Saturday, Sunday, Monday, Tuesday, Wednesday
   const weekDaysOrder = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
     "Thursday",
     "Friday",
     "Saturday",
     "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
   ];
 
+  // Find the index of the current day and reorder the weekDaysOrder array
   const currentDate = new Date();
+  const currentDayOfWeek = format(currentDate, "EEEE");
+  const indexOfCurrentDay = weekDaysOrder.indexOf(currentDayOfWeek);
+  const reorderedWeekDaysOrder = [
+    ...weekDaysOrder.slice(indexOfCurrentDay + 1),
+    ...weekDaysOrder.slice(0, indexOfCurrentDay + 1),
+  ];
+
   const monthsOrder = Array.from({ length: 12 }, (_, i) =>
     subMonths(currentDate, i)
   );
@@ -98,13 +107,13 @@ const Graph = () => {
       <div style={{ display: "flex", margin: "auto", width: "100%" }}>
         <div style={{ display: "flex", alignContent: "flex-start" }}>
           <ul>
-            {weekDaysOrder.map((day) => (
+            {reorderedWeekDaysOrder.map((day) => (
               <li key={day}>{day.slice(0, 2)}</li>
             ))}
           </ul>
         </div>
         <div>
-          {weekDaysOrder.map((day) => (
+          {reorderedWeekDaysOrder.map((day) => (
             <DayOfWeek key={day} weekDay={dataByDays[day]} />
           ))}
         </div>
