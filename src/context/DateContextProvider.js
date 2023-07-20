@@ -36,18 +36,15 @@ const DateContextProvider = ({ children }) => {
     getData();
   }, []);
 
-  // Convert the state.date object to an array of objects
   const dateArray = Object.entries(state.date).map(([date, value]) => ({
     date,
     value,
   }));
 
-  // Get the last 357 days
   const last357Days = Array.from({ length: 357 }, (_, index) =>
     format(subDays(new Date(), index), "yyyy-MM-dd")
   ).reverse();
 
-  // Create an array with values for the last 357 days, filling missing days with 0
   const valuesForLast357Days = last357Days.map((date) => {
     const foundDate = dateArray.find((item) => item.date === date);
     return {

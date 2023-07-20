@@ -16,12 +16,11 @@ import DayOfWeek from "../components/DayOfWeek";
 const Graph = () => {
   const { date, getData } = useDate();
 
-  // Function to group data by days
   const groupDataByDays = () => {
     const dataByDays = {};
     date.forEach((item) => {
       const dateObj = new Date(item.date);
-      const dayOfWeek = format(dateObj, "EEEE"); // EEEE gives the full day name (Monday, Tuesday, etc.)
+      const dayOfWeek = format(dateObj, "EEEE");
 
       if (!dataByDays[dayOfWeek]) {
         dataByDays[dayOfWeek] = [];
@@ -34,12 +33,11 @@ const Graph = () => {
     return dataByDays;
   };
 
-  // Function to group data by weeks
   const groupDataByWeeks = () => {
     const dataByWeeks = {};
     date.forEach((item) => {
       const dateObj = new Date(item.date);
-      const startOfWeekDate = startOfWeek(dateObj, { weekStartsOn: 1 }); // Assuming week starts on Monday (use 0 for Sunday)
+      const startOfWeekDate = startOfWeek(dateObj, { weekStartsOn: 1 });
       const endOfWeekDate = endOfWeek(dateObj, { weekStartsOn: 1 });
       const weekKey = format(startOfWeekDate, "yyyy-MM-dd");
       const daysInWeek = differenceInDays(endOfWeekDate, startOfWeekDate) + 1;
@@ -73,7 +71,6 @@ const Graph = () => {
     "Sunday",
   ];
 
-  // Generate an array with the last 12 months in reverse order
   const currentDate = new Date();
   const monthsOrder = Array.from({ length: 12 }, (_, i) =>
     subMonths(currentDate, i)
@@ -118,7 +115,7 @@ const Graph = () => {
           margin: "10px",
           width: "170px",
           justifyContent: "center",
-          alignItems: "center", // Center vertically
+          alignItems: "center",
         }}
       >
         <div className="example_text">Меньше</div>
